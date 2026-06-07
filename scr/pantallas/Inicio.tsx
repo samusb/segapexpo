@@ -7,6 +7,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 type RootStackParamList = {
   Home: undefined;
   EscanearQR: undefined;
+  Invitar: undefined;
 };
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
@@ -22,6 +23,13 @@ export default function Inicio({ navigation }: Props) {
         onPress={() => navigation.navigate('EscanearQR')}
       >
         <Text style={styles.botonTexto}>Escanear QR</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity 
+        style={[styles.boton, { marginTop: 20 }]} 
+        onPress={() => navigation.navigate('Invitar')}
+      >
+        <Text style={styles.botonTexto}>Invitar Usuario</Text>
       </TouchableOpacity>
 
       <StatusBar style="light" />
