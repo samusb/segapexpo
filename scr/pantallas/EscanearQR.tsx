@@ -14,7 +14,7 @@ export default function EscanearQR() {
     // Camera permissions are not granted yet
     return (
       <View style={styles.container}>
-        <Text style={styles.message}>Precisamos da sua permissão para abrir a câmera</Text>
+        <Text style={styles.message}>Favor dar permiso de uso de camara</Text>
         <Button onPress={requestPermission} title="Conceder Permissão" />
       </View>
     );
