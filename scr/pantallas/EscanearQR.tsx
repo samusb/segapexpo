@@ -1,9 +1,11 @@
+import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { CameraView, useCameraPermissions } from 'expo-camera';
 
 export default function EscanearQR() {
   const [permission, requestPermission] = useCameraPermissions();
+  const [scannedData, setScannedData] = useState<string | null>(null);
 
   if (!permission) {
     // Camera permissions are still loading
@@ -26,9 +28,21 @@ export default function EscanearQR() {
       <View style={styles.qrFrame}> 
         <CameraView 
           style={styles.camera} 
-          onBarcodeScanned={(scanningResult) => console.log(scanningResult.data)}
+          onBarcodeScanned={(scanningResult) => {
+            if (!scannedData) {
+              setScannedData(scanningResult.data);
+            }
+          }}
         />
       </View>
+
+      {scannedData && (
+        <View style={styles.resultadoContainer}>
+          <Text style={styles.resultadoTitulo}>Contenido del QR:</Text>
+          <Text style={styles.resultadoTexto}>{scannedData}</Text>
+          <Button title="Limpiar y Escanear otro" onPress={() => setScannedData(null)} color="#fbef10" />
+        </View>
+      )}
 
       <StatusBar style="auto" />
     </View>
@@ -66,4 +80,16 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
+  resultadoContainer: {
+    marginTop: 30,
+    padding: 20,
+    backgroundColor: '#1a1a1a',
+    borderRadius: 10,
+    alignItems: 'center',
+    width: '85%',
+    borderWidth: 1,
+    borderColor: '#333',
+  },
+  resultadoTitulo: { color: '#aaa', fontSize: 14, marginBottom: 5 },
+  resultadoTexto: { color: '#fff', fontSize: 16, fontWeight: 'bold', marginBottom: 15, textAlign: 'center' },
 });
