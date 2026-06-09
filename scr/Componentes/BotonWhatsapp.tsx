@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Button, Alert } from 'react-native';
+import { View, StyleSheet, Text, Alert, TouchableOpacity } from 'react-native';
 import * as Sharing from 'expo-sharing';
 
 /**
@@ -32,11 +32,17 @@ export const BotonWhatsapp = ({ viewShotRef }: { viewShotRef: React.RefObject<an
     <View style={styles.container}>
       
       <View style={styles.buttonContainer}>
-        <Button 
+        {/* <Button 
           title="Generar e Invitar Visitante (WhatsApp)" 
           onPress={compartirPorWhatsApp} 
           color="#25D366"
-        />
+        /> */}
+        <TouchableOpacity 
+          style={[styles.boton, { marginTop: 20 }]} 
+          onPress={() => compartirPorWhatsApp}
+        >
+          <Text style={styles.botonTexto}>Limpiar y Escanear otro</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -46,5 +52,17 @@ const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   title: { fontSize: 18, fontWeight: 'bold', marginBottom: 20 },
   statusText: { marginTop: 15, fontSize: 16, fontWeight: '600', color: 'green' },
-  buttonContainer: { marginTop: 30, width: '80%' }
+  buttonContainer: { marginTop: 30, width: '80%' },
+  botonTexto: {
+    fontWeight: 'bold',
+    color: '#000',
+  },
+   boton: {
+    backgroundColor: '#fbef10ba',
+    borderColor: '#fbef10',
+    borderWidth: 2,
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    borderRadius: 10,
+  }
 });
