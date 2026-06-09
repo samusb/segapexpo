@@ -32,14 +32,9 @@ export const BotonWhatsapp = ({ viewShotRef }: { viewShotRef: React.RefObject<an
     <View style={styles.container}>
       
       <View style={styles.buttonContainer}>
-        {/* <Button 
-          title="Generar e Invitar Visitante (WhatsApp)" 
-          onPress={compartirPorWhatsApp} 
-          color="#25D366"
-        /> */}
         <TouchableOpacity 
           style={[styles.boton, { marginTop: 20 }]} 
-          onPress={() => compartirPorWhatsApp}
+          onPress={() => compartirPorWhatsApp()}
         >
           <Text style={styles.botonTexto}>Limpiar y Escanear otro</Text>
         </TouchableOpacity>
