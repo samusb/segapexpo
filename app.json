@@ -26,6 +26,11 @@
     },
     "web": {
       "favicon": "./assets/Segap_v1.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "d5c8d95c-95a6-4aa9-8aab-7d43b256a064"
+      }
     }
   }
 }
