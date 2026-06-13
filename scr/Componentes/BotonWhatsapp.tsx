@@ -1,14 +1,16 @@
 import React from 'react';
 import { View, StyleSheet, Text, Alert, TouchableOpacity } from 'react-native';
 import * as Sharing from 'expo-sharing';
+import { guardarInvitacion } from '../Funciones/GenerarInvitacion';
 
 /**
  * Componente para compartir el código QR generado a través de WhatsApp, Necesita el ref del ViewShot para capturar la imagen del QR
  * @param {Object} props - Las props para el componente
- * @param {React.RefObject<any>} props.imagenQR - El ref del ViewShot que contiene el QR
+ * @param {React.RefObject<any>} props.viewShotRef - El ref del ViewShot que contiene el QR
+ * @param {any} props.invitacion - El objeto de la invitación para guardar antes de compartir
  * @returns {JSX.Element} Componente que muestra el botón para compartir en WhatsApp
  */
-export const BotonWhatsapp = ({ viewShotRef }: { viewShotRef: React.RefObject<any> }) => {
+export const BotonWhatsapp = ({ viewShotRef, invitacion }: { viewShotRef: React.RefObject<any>, invitacion: any }) => {
 
   const compartirPorWhatsApp = async () => {
     try {
@@ -18,6 +20,9 @@ export const BotonWhatsapp = ({ viewShotRef }: { viewShotRef: React.RefObject<an
         Alert.alert("Error", "La función de compartir no está disponible en este dispositivo.");
         return;
       }
+
+      // Guardamos la invitación en el almacenamiento local al presionar el botón
+      await guardarInvitacion(invitacion);
 
       const uri = await viewShotRef.current.capture();// Espera a que se capture la imagen del QR generado en el componente GenerarQR, utilizando el ref pasado como prop
 
@@ -36,7 +41,7 @@ export const BotonWhatsapp = ({ viewShotRef }: { viewShotRef: React.RefObject<an
           style={[styles.boton, { marginTop: 20 }]} 
           onPress={() => compartirPorWhatsApp()}
         >
-          <Text style={styles.botonTexto}>Limpiar y Escanear otro</Text>
+          <Text style={styles.botonTexto}>Compartir por WhatsApp</Text>
         </TouchableOpacity>
       </View>
     </View>

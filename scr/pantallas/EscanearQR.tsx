@@ -72,7 +72,7 @@ export default function EscanearQR() {
         </View>
       )}
 
-      <StatusBar style="dark" />
+      <StatusBar style="light" />
     </View>
   );
 }
