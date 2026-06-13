@@ -91,3 +91,35 @@ export const obtenerInvitaciones = async () => {
     return invitacionesData;
   }
 };
+
+/**
+ * Valida si una invitación existe, está activa y la marca como usada (inactivo)
+ * @param {string} idUnico - ID único de la invitación a validar
+ */
+export const validarYUsarInvitacion = async (idUnico) => {
+  try {
+    const invitacionesGuardadas = await AsyncStorage.getItem('invitaciones');
+    let invitacionesArray = invitacionesGuardadas ? JSON.parse(invitacionesGuardadas) : [...invitacionesData];
+    
+    const index = invitacionesArray.findIndex(inv => inv.idUnico === idUnico);
+    
+    if (index === -1) {
+      return { success: false, mensaje: 'Invitación no registrada en el sistema' };
+    }
+
+    const invitacion = invitacionesArray[index];
+
+    if (invitacion.estado !== 'activo') {
+      return { success: false, mensaje: `Código ya utilizado o vencido (${invitacion.estado})`, data: invitacion };
+    }
+
+    // Marcamos como inactivo para que no se pueda volver a usar
+    invitacionesArray[index].estado = 'inactivo';
+    await AsyncStorage.setItem('invitaciones', JSON.stringify(invitacionesArray));
+
+    return { success: true, mensaje: 'Acceso Permitido', data: invitacionesArray[index] };
+  } catch (error) {
+    console.error('Error al validar invitación:', error);
+    return { success: false, mensaje: 'Error técnico al procesar el acceso' };
+  }
+};
