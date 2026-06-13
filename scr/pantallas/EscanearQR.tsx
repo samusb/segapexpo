@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableOpacity, ScrollView } from 'react-native';
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import { validarYUsarInvitacion } from '../Funciones/GenerarInvitacion';
 
@@ -24,6 +24,7 @@ export default function EscanearQR() {
     );
   }
 
+  /** Función para procesar el resultado del escaneo, validando el formato y consultando al servidor */
   const procesarEscaneo = async (data: string) => {
     if (scannedData) return; // Evita escaneos duplicados rápidos
     setScannedData(data);
@@ -66,7 +67,7 @@ export default function EscanearQR() {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container} contentContainerStyle={styles.scrollContainer}>
       <Text style={styles.titulo}>Escaneando código QR...</Text>
       <View style={styles.qrFrame}> 
         <CameraView 
@@ -80,7 +81,11 @@ export default function EscanearQR() {
 
       {scannedData && (
         <View style={styles.resultadoContainer}>
-          {renderScannedContent()}
+
+          {/* <--Muestra el resultado de la validación del QR */}
+          {renderScannedContent()} 
+
+          {/* Botón para limpiar el resultado y permitir escanear otro código */}
           <TouchableOpacity 
             style={[styles.boton, { marginTop: 20 }]} 
             onPress={() => {
@@ -94,7 +99,7 @@ export default function EscanearQR() {
       )}
 
       <StatusBar style="light" />
-    </View>
+    </ScrollView>
   );
 }
 
@@ -102,8 +107,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#080808',
+  },
+  scrollContainer: {
     alignItems: 'center',
     justifyContent: 'center',
+    paddingVertical: 40,
+    flexGrow: 1,
   },
   message: {
     color: '#fff',
