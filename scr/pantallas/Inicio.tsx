@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useAuth } from '../Context/AuthContext';
 
 // Definimos los tipos para la navegación
 type RootStackParamList = {
@@ -13,16 +14,18 @@ type RootStackParamList = {
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
-export default function Inicio({ navigation, route }: Props) {
-  const { nombre, rol } = route.params;
+export default function Inicio({ navigation }: Props) {
+  const { usuario } = useAuth();
+
+  if (!usuario) return null;
 
   return (
     <View style={styles.container}>
-      <Text style={styles.titulo}>¡Hola, {nombre}!</Text>
+      <Text style={styles.titulo}>¡Hola, {usuario.nombre}!</Text>
       <Text style={styles.subtitulo}>Favor selecciona la funcion que deseas ejecutar:</Text>
 
       {/* Botón visible para Guardia y Administrador */}
-      {(rol === 'guardia' || rol === 'administrador') && (
+      {(usuario.rol === 'guardia' || usuario.rol === 'administrador') && (
         <TouchableOpacity 
           style={styles.boton} 
           onPress={() => navigation.navigate('EscanearQR')}
@@ -32,7 +35,7 @@ export default function Inicio({ navigation, route }: Props) {
       )}
 
       {/* Botón visible para Administrador, Residente y Parametrizador */}
-      {(rol !== 'guardia') && (
+      {(usuario.rol !== 'guardia') && (
         <TouchableOpacity 
           style={[styles.boton, { marginTop: 20 }]} 
           onPress={() => navigation.navigate('Invitar')}

@@ -3,14 +3,16 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'reac
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../App';
 import { verificarUsuario } from '../Funciones/Autenticacion';
+import { useAuth } from '../Context/AuthContext';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
 
-export default function Login({ navigation }: Props) {
+export default function Login({ }: Props) {
   const [email, setEmail] = useState('');
   const [clave, setClave] = useState('');
+  const { login } = useAuth();
 
-  const manejarLogin = () => {
+  const manejarLogin = async () => {
     if (!email || !clave) {
       Alert.alert('Atención', 'Por favor complete todos los campos.');
       return;
@@ -20,11 +22,10 @@ export default function Login({ navigation }: Props) {
     const usuarioEncontrado = verificarUsuario(email, clave);
 
     if (usuarioEncontrado) {
-      // Si es exitoso, navegamos a la pantalla de Inicio
-      // TypeScript sabe que aquí usuarioEncontrado NO es null (Type Narrowing)
-      navigation.replace('Home', { 
+      // Guardamos en la variable de sesión global
+      await login({
         nombre: usuarioEncontrado.primerNombre,
-        rol: usuarioEncontrado.rol 
+        rol: usuarioEncontrado.rol
       });
     } else {
       Alert.alert('Error', 'Usuario o contraseña incorrectos.');
