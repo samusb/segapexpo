@@ -5,7 +5,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 // Definimos los tipos para la navegación
 type RootStackParamList = {
-  Home: { nombre: string };
+  Home: { nombre: string; rol: string };
   EscanearQR: undefined;
   Invitar: undefined;
   Login: undefined;
@@ -14,26 +14,32 @@ type RootStackParamList = {
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
 export default function Inicio({ navigation, route }: Props) {
-  const { nombre } = route.params;
+  const { nombre, rol } = route.params;
 
   return (
     <View style={styles.container}>
       <Text style={styles.titulo}>¡Hola, {nombre}!</Text>
-      <Text style={styles.subtitulo}>Sistema de Gestión de accesos</Text>
+      <Text style={styles.subtitulo}>Favor selecciona la funcion que deseas ejecutar:</Text>
 
-      <TouchableOpacity 
-        style={styles.boton} 
-        onPress={() => navigation.navigate('EscanearQR')}
-      >
-        <Text style={styles.botonTexto}>Escanear QR</Text>
-      </TouchableOpacity>
+      {/* Botón visible para Guardia y Administrador */}
+      {(rol === 'guardia' || rol === 'administrador') && (
+        <TouchableOpacity 
+          style={styles.boton} 
+          onPress={() => navigation.navigate('EscanearQR')}
+        >
+          <Text style={styles.botonTexto}>Escanear QR</Text>
+        </TouchableOpacity>
+      )}
 
-      <TouchableOpacity 
-        style={[styles.boton, { marginTop: 20 }]} 
-        onPress={() => navigation.navigate('Invitar')}
-      >
-        <Text style={styles.botonTexto}>Invitar Usuario</Text>
-      </TouchableOpacity>
+      {/* Botón visible para Administrador, Residente y Parametrizador */}
+      {(rol !== 'guardia') && (
+        <TouchableOpacity 
+          style={[styles.boton, { marginTop: 20 }]} 
+          onPress={() => navigation.navigate('Invitar')}
+        >
+          <Text style={styles.botonTexto}>Invitar Usuario</Text>
+        </TouchableOpacity>
+      )}
 
       <StatusBar style="light" />
     </View>
@@ -56,6 +62,8 @@ const styles = StyleSheet.create({
     color: '#aaa',
     fontSize: 18,
     marginBottom: 40,
+    textAlign: 'center',
+    marginHorizontal: 20,
   },
   boton: {
     backgroundColor: '#fbef10ba',

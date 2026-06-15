@@ -22,7 +22,10 @@ export default function Login({ navigation }: Props) {
     if (usuarioEncontrado) {
       // Si es exitoso, navegamos a la pantalla de Inicio
       // TypeScript sabe que aquí usuarioEncontrado NO es null (Type Narrowing)
-      navigation.replace('Home', { nombre: usuarioEncontrado.primerNombre });
+      navigation.replace('Home', { 
+        nombre: usuarioEncontrado.primerNombre,
+        rol: usuarioEncontrado.rol 
+      });
     } else {
       Alert.alert('Error', 'Usuario o contraseña incorrectos.');
     }
