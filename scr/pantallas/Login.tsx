@@ -16,12 +16,13 @@ export default function Login({ navigation }: Props) {
       return;
     }
 
-    // Usamos la función de verificación definida en Autenticacion.js
-    const esValido = verificarUsuario(email, clave);
+    // Al usar .ts, el tipo de usuarioEncontrado se infiere correctamente como Usuario | null
+    const usuarioEncontrado = verificarUsuario(email, clave);
 
-    if (esValido) {
+    if (usuarioEncontrado) {
       // Si es exitoso, navegamos a la pantalla de Inicio
-      navigation.replace('Home');
+      // TypeScript sabe que aquí usuarioEncontrado NO es null (Type Narrowing)
+      navigation.replace('Home', { nombre: usuarioEncontrado.primerNombre });
     } else {
       Alert.alert('Error', 'Usuario o contraseña incorrectos.');
     }

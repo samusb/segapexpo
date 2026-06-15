@@ -5,17 +5,20 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 // Definimos los tipos para la navegación
 type RootStackParamList = {
-  Home: undefined;
+  Home: { nombre: string };
   EscanearQR: undefined;
   Invitar: undefined;
+  Login: undefined;
 };
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
-export default function Inicio({ navigation }: Props) {
+export default function Inicio({ navigation, route }: Props) {
+  const { nombre } = route.params;
+
   return (
     <View style={styles.container}>
-      <Text style={styles.titulo}>SEGAP</Text>
+      <Text style={styles.titulo}>¡Hola, {nombre}!</Text>
       <Text style={styles.subtitulo}>Sistema de Gestión de accesos</Text>
 
       <TouchableOpacity 

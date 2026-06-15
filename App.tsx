@@ -9,7 +9,7 @@ import Login from './scr/pantallas/Login';
 
 // Definición de las rutas del Stack
 export type RootStackParamList = {
-  Home: undefined;
+  Home: { nombre: string };
   EscanearQR: undefined;
   Invitar: undefined;
   Login: undefined;

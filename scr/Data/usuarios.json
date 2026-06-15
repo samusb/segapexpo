@@ -1,10 +1,10 @@
 [
   {
     "email": "admin@segap.hn",
-    "primerNombre": "Juan",
-    "segundoNombre": "Carlos",
-    "primerApellido": "Pérez",
-    "segundoApellido": "García",
+    "primerNombre": "Uzias",
+    "segundoNombre": "Samir",
+    "primerApellido": "Gomez",
+    "segundoApellido": "Maldonado",
     "rol": "administrador",
     "clave": "1234"
   },
