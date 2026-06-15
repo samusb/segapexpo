@@ -1,4 +1,5 @@
 import React from 'react';
+import { ScrollView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Inicio from './scr/pantallas/Inicio';
@@ -14,6 +15,19 @@ export type RootStackParamList = {
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
+// HOC para envolver cualquier pantalla en un ScrollView global
+const withGlobalScroll = (Component: React.ComponentType<any>) => {
+  return (props: any) => (
+    <ScrollView 
+      style={{ flex: 1, backgroundColor: '#080808' }} 
+      contentContainerStyle={{ flexGrow: 1 }}
+      keyboardShouldPersistTaps="handled"
+    >
+      <Component {...props} />
+    </ScrollView>
+  );
+};
+
 export default function App() {
   return (
     <NavigationContainer>
@@ -25,9 +39,9 @@ export default function App() {
           headerTitleStyle: { fontWeight: 'bold' },
         }}
       >
-        <Stack.Screen name="Home" component={Inicio} options={{ title: 'Inicio' }} />
-        <Stack.Screen name="EscanearQR" component={EscanearQR} options={{ title: 'Escanear' }} />
-        <Stack.Screen name="Invitar" component={Invitar} options={{ title: 'Invitar Usuario' }} />
+        <Stack.Screen name="Home" component={withGlobalScroll(Inicio)} options={{ title: 'Inicio' }} />
+        <Stack.Screen name="EscanearQR" component={withGlobalScroll(EscanearQR)} options={{ title: 'Escanear' }} />
+        <Stack.Screen name="Invitar" component={withGlobalScroll(Invitar)} options={{ title: 'Invitar Usuario' }} />
         
       </Stack.Navigator>
     </NavigationContainer>

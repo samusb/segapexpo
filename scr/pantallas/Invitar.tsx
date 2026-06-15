@@ -25,14 +25,14 @@ export default function Invitar() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Generar Invitación</Text>
+      <Text style={styles.title}>Código de Invitación</Text>
 
       {invitacion && ( <GenerarQR textoDelQR={TextoDelQR} qrRef={qrRef} /> )}
-      {invitacion && <BotonWhatsapp viewShotRef={qrRef} invitacion={invitacion} />}
-
       <Text style={styles.description}>
         Este es el código QR que se generó para tu invitado.
       </Text>
+      {invitacion && <BotonWhatsapp viewShotRef={qrRef} invitacion={invitacion} />}
+
     </View>
   );
 }

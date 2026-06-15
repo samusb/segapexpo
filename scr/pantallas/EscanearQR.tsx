@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import { validarYUsarInvitacion } from '../Funciones/GenerarInvitacion';
 
@@ -67,7 +67,7 @@ export default function EscanearQR() {
   };
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.scrollContainer}>
+    <View style={[styles.container, styles.scrollContainer]}>
       <Text style={styles.titulo}>Escaneando código QR...</Text>
       <View style={styles.qrFrame}> 
         <CameraView 
@@ -99,7 +99,7 @@ export default function EscanearQR() {
       )}
 
       <StatusBar style="light" />
-    </ScrollView>
+    </View>
   );
 }
 
