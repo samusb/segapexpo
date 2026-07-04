@@ -3,23 +3,21 @@ import { View, Text, StyleSheet } from 'react-native';
 import { GenerarQR } from '../Componentes/GenerarQR';
 import { BotonWhatsapp } from '../Componentes/BotonWhatsapp';
 import { crearInvitacion } from '../Funciones/GenerarInvitacion';
+import { useAuth } from '../Context/AuthContext';
 
 export default function Invitar() {
   const [invitacion, setInvitacion] = useState<any>(null);
   const qrRef = useRef<any>(null);
+  const { usuario } = useAuth();
 
   useEffect(() => {
     // Al montar la pantalla, solo generamos el objeto de invitación para el QR
     // pero NO lo guardamos en el storage todavía.
-    const nuevaInvitacion = crearInvitacion(
-      '1617', 
-      'A', 
-      'visitante', 
-      'activo', 
-      new Date().toISOString().split('T')[0]
-    );
-    setInvitacion(nuevaInvitacion);
-  }, []); // Se ejecuta solo una vez al montar
+    if (usuario?.clienteInfo?.id) {
+      const nuevaInvitacion = crearInvitacion(usuario.clienteInfo.id);
+      setInvitacion(nuevaInvitacion);
+    }
+  }, [usuario]); // Se ejecuta cuando el usuario esté disponible
 
   const TextoDelQR = invitacion ? JSON.stringify(invitacion) : 'Cargando...';
 

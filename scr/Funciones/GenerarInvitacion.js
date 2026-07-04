@@ -1,39 +1,32 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import invitacionesData from '../Data/invitaciones.json';
+import clientes from '../Data/clientes.json';
+import residencias from '../Data/residencias.json';
 
 /**
  * Genera un ID único para la invitación
  */
-const generarIdUnico = (tipo, casa, bloque) => {
+const generarIdUnico = (tipo, idCliente) => {
   const timestamp = Date.now();
-  const prefix = tipo === 'residente' ? 'RES' : 'VIS';
-  return `${prefix}_${casa}_${bloque}_${timestamp}`;
+  const prefix = tipo === 'residente' ? 'RES' : 'VIS'; // 'VIS' para visitante
+  return `${prefix}_${idCliente}_${timestamp}`;
 };
 
 /**
  * Crea una nueva invitación de visitante
- * @param {string} casa - Número de casa
- * @param {string} bloque - Letra del bloque
+ * @param {string} idCliente - ID del cliente que genera la invitación
  * @param {string} tipo - 'residente' o 'visitante'
  * @param {string} estado - 'activo' o 'vencido'
- * @param {string} fechaUltimoPago - Fecha en formato YYYY-MM-DD
  * @returns {Object} Nueva invitación creada
  */
 export const crearInvitacion = (
-  casa,
-  bloque,
+  idCliente,
   tipo = 'visitante',
-  estado = 'activo',
-  fechaUltimoPago = new Date().toISOString().split('T')[0]
+  estado = 'activo'
 ) => {
   const nuevaInvitacion = {
-    url: "www.truetech.hn",
-    tipo,
-    casa,
-    bloque,
-    fechaUltimoPago,
+    idUnico: generarIdUnico(tipo, idCliente),
     estado,
-    idUnico: generarIdUnico(tipo, casa, bloque)
   };
   console.log('Nueva invitación creada:', nuevaInvitacion);
   return nuevaInvitacion;
@@ -46,9 +39,14 @@ export const crearInvitacion = (
 export const guardarInvitacion = async (invitacion) => {
   try {
     const invitacionesGuardadas = await AsyncStorage.getItem('invitaciones');
-    const invitacionesArray = invitacionesGuardadas ? JSON.parse(invitacionesGuardadas) : invitacionesData;
+    const invitacionesArray = invitacionesGuardadas ? JSON.parse(invitacionesGuardadas) : [...invitacionesData];
     
-    invitacionesArray.push(invitacion);
+    // Guardamos solo el idUnico y el estado
+    const invitacionParaGuardar = {
+      idUnico: invitacion.idUnico,
+      estado: invitacion.estado,
+    };
+    invitacionesArray.push(invitacionParaGuardar);
     await AsyncStorage.setItem('invitaciones', JSON.stringify(invitacionesArray));
     console.log('Invitación guardada correctamente:', invitacion);
     console.log('Invitaciones actuales:', invitacionesArray);
@@ -62,20 +60,12 @@ export const guardarInvitacion = async (invitacion) => {
 
 /**
  * Crea y guarda una nueva invitación en una sola operación
- * @param {string} casa - Número de casa
- * @param {string} bloque - Letra del bloque
+ * @param {string} idCliente - ID del cliente que genera la invitación
  * @param {string} tipo - 'residente' o 'visitante'
  * @param {string} estado - 'activo' o 'vencido'
- * @param {string} fechaUltimoPago - Fecha en formato YYYY-MM-DD
  */
-export const crearYGuardarInvitacion = async (
-  casa,
-  bloque,
-  tipo = 'visitante',
-  estado = 'activo',
-  fechaUltimoPago = new Date().toISOString().split('T')[0]
-) => {
-  const nuevaInvitacion = crearInvitacion(casa, bloque, tipo, estado, fechaUltimoPago);
+export const crearYGuardarInvitacion = async (idCliente, tipo = 'visitante', estado = 'activo') => {
+  const nuevaInvitacion = crearInvitacion(idCliente, tipo, estado);
   return await guardarInvitacion(nuevaInvitacion);
 };
 
@@ -109,15 +99,37 @@ export const validarYUsarInvitacion = async (idUnico) => {
 
     const invitacion = invitacionesArray[index];
 
+    // Validar el estado de la invitación
     if (invitacion.estado !== 'activo') {
       return { success: false, mensaje: `Código ya utilizado o vencido (${invitacion.estado})`, data: invitacion };
+    }
+
+    // Extraer el idCliente del idUnico de la invitación
+    const idCliente = idUnico.split('_')[1];
+    const cliente = clientes.find(c => c.id === idCliente);
+    const residencia = residencias.find(r => r.cliente === idCliente);
+
+    if (!cliente || !residencia) {
+      return { success: false, mensaje: 'Invitación inválida. Residente no encontrado.' };
+    }
+
+    // Validar el estado de cuenta del residente que invita
+    if (cliente.estadoCuenta !== 'solvente') {
+      return { success: false, mensaje: `Acceso denegado. El residente de la casa ${residencia.casa}-${residencia.bloque} no está solvente.` };
     }
 
     // Marcamos como inactivo para que no se pueda volver a usar
     invitacionesArray[index].estado = 'inactivo';
     await AsyncStorage.setItem('invitaciones', JSON.stringify(invitacionesArray));
 
-    return { success: true, mensaje: 'Acceso Permitido', data: invitacionesArray[index] };
+    // Construir el objeto de datos para la respuesta
+    const datosAcceso = {
+      "Invitado por": `${cliente.primerNombre} ${cliente.primerApellido}`,
+      "Residencia": `Casa ${residencia.casa}, Bloque ${residencia.bloque}`,
+      "Estado de Residente": cliente.estadoCuenta,
+    };
+
+    return { success: true, mensaje: 'Acceso Permitido', data: datosAcceso };
   } catch (error) {
     console.error('Error al validar invitación:', error);
     return { success: false, mensaje: 'Error técnico al procesar el acceso' };

@@ -23,10 +23,7 @@ export default function Login({ }: Props) {
 
     if (usuarioEncontrado) {
       // Guardamos en la variable de sesión global
-      await login({
-        nombre: usuarioEncontrado.nombre,
-        rol: usuarioEncontrado.rol
-      });
+      await login(usuarioEncontrado);
     } else {
       Alert.alert('Error', 'Usuario o contraseña incorrectos.');
     }

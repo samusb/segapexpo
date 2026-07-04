@@ -1,29 +1,14 @@
 [
   {
-    "url": "www.truetech.hn",
-    "tipo": "visitante",
-    "casa": "14",
-    "bloque": "B",
-    "fechaUltimoPago": "2026-05-01",
     "estado": "activo",
-    "idUnico": "RES_14_B_001"
+    "idUnico": "VIS_RES-B-14-002_1720136800000"
   },
   {
-    "url": "www.truetech.hn",
-    "tipo": "visitante",
-    "casa": "20",
-    "bloque": "A",
-    "fechaUltimoPago": "2026-06-15",
     "estado": "activo",
-    "idUnico": "VIS_20_A_002"
+    "idUnico": "VIS_RES-A-20-001_1720136900000"
   },
   {
-    "url": "www.truetech.hn",
-    "tipo": "visitante",
-    "casa": "8",
-    "bloque": "C",
-    "fechaUltimoPago": "2026-04-20",
     "estado": "vencido",
-    "idUnico": "RES_8_C_003"
+    "idUnico": "VIS_RES-C-8-003_1720137000000"
   }
 ]
