@@ -1,0 +1,37 @@
+[
+  {
+    "bloque": "A",
+    "casa": "20",
+    "latitud": 14.0841,
+    "longitud": -87.1841,
+    "cliente": "RES-A-20-001"
+  },
+  {
+    "bloque": "B",
+    "casa": "14",
+    "latitud": 14.0852,
+    "longitud": -87.1852,
+    "cliente": "RES-B-14-002"
+  },
+  {
+    "bloque": "C",
+    "casa": "8",
+    "latitud": 14.0863,
+    "longitud": -87.1863,
+    "cliente": "RES-C-8-003"
+  },
+  {
+    "bloque": "A",
+    "casa": "5",
+    "latitud": 14.0874,
+    "longitud": -87.1874,
+    "cliente": "RES-A-5-004"
+  },
+  {
+    "bloque": "B",
+    "casa": "11",
+    "latitud": 14.0885,
+    "longitud": -87.1885,
+    "cliente": "RES-B-11-005"
+  }
+]

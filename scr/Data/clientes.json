@@ -1,0 +1,62 @@
+[
+  {
+    "id": "RES-A-20-001",
+    "primerNombre": "Uzias",
+    "segundoNombre": "Samir",
+    "primerApellido": "Gomez",
+    "segundoApellido": "Maldonado",
+    "email": "ugomez@email.com",
+    "telefono": "9988-7766",
+    "estadoCuenta": "solvente",
+    "fechaUltimoPago": "2026-06-15",
+    "rolId": "ADM"
+  },
+  {
+    "id": "RES-B-14-002",
+    "primerNombre": "Fausto",
+    "segundoNombre": "Jose",
+    "primerApellido": "Martínez",
+    "segundoApellido": "López",
+    "email": "carlos.martinez@email.com",
+    "telefono": "3322-1100",
+    "estadoCuenta": "solvente",
+    "fechaUltimoPago": "2026-05-01",
+    "rolId": "GUA"
+  },
+  {
+    "id": "RES-C-8-003",
+    "primerNombre": "Sofía",
+    "segundoNombre": "Elena",
+    "primerApellido": "Hernández",
+    "segundoApellido": "",
+    "email": "sofia.hernandez@email.com",
+    "telefono": "8765-4321",
+    "estadoCuenta": "mora",
+    "fechaUltimoPago": "2026-04-20",
+    "rolId": "RES"
+  },
+  {
+    "id": "RES-A-5-004",
+    "primerNombre": "Luis",
+    "segundoNombre": "Miguel",
+    "primerApellido": "Díaz",
+    "segundoApellido": "Castillo",
+    "email": "luis.diaz@email.com",
+    "telefono": "9123-4567",
+    "estadoCuenta": "solvente",
+    "fechaUltimoPago": "2026-06-10",
+    "rolId": "RES"
+  },
+  {
+    "id": "RES-B-11-005",
+    "primerNombre": "Gabriela",
+    "segundoNombre": "Alejandra",
+    "primerApellido": "Paz",
+    "segundoApellido": "Rivera",
+    "email": "gabriela.paz@email.com",
+    "telefono": "9876-1234",
+    "estadoCuenta": "mora",
+    "fechaUltimoPago": "2026-03-30",
+    "rolId": "RES"
+  }
+]

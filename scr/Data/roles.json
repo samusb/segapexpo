@@ -1,0 +1,18 @@
+[
+  {
+    "id": "RES",
+    "descripcion": "Residente"
+  },
+  {
+    "id": "GUA",
+    "descripcion": "Guardia de Seguridad"
+  },
+  {
+    "id": "ADM",
+    "descripcion": "Administrador"
+  },
+  {
+    "id": "PAR",
+    "descripcion": "Parametrizador"
+  }
+]
