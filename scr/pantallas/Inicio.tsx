@@ -24,8 +24,8 @@ export default function Inicio({ navigation }: Props) {
       <Text style={styles.titulo}>¡Hola, {usuario.nombre}!</Text>
       <Text style={styles.subtitulo}>Favor selecciona la funcion que deseas ejecutar:</Text>
 
-      {/* Botón visible para Guardia y Administrador */}
-      {(usuario.rol === 'guardia' || usuario.rol === 'administrador') && (
+      {/* Botón visible para Guardia (GUA) y Administrador (ADM) */}
+      {(usuario.rol === 'GUA' || usuario.rol === 'ADM') && (
         <TouchableOpacity 
           style={styles.boton} 
           onPress={() => navigation.navigate('EscanearQR')}
@@ -34,8 +34,8 @@ export default function Inicio({ navigation }: Props) {
         </TouchableOpacity>
       )}
 
-      {/* Botón visible para Administrador, Residente y Parametrizador */}
-      {(usuario.rol !== 'guardia') && (
+      {/* Botón visible para todos excepto Guardia (GUA) */}
+      {(usuario.rol !== 'GUA') && (
         <TouchableOpacity 
           style={[styles.boton, { marginTop: 20 }]} 
           onPress={() => navigation.navigate('Invitar')}

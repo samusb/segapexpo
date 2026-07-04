@@ -1,38 +1,22 @@
 [
   {
-    "email": "admin@segap.hn",
-    "primerNombre": "Uzias",
-    "segundoNombre": "Samir",
-    "primerApellido": "Gomez",
-    "segundoApellido": "Maldonado",
-    "rol": "administrador",
-    "clave": "1234"
+    "usuario": "ugomez",
+    "clave": "1234",
+    "idCliente": "RES-A-20-001"
   },
   {
-    "email": "residente.bloquea@segap.hn",
-    "primerNombre": "Vecino",
-    "segundoNombre": "Antonio",
-    "primerApellido": "Rodríguez",
-    "segundoApellido": "López",
-    "rol": "residente",
-    "clave": "1234"
+    "usuario": "cmartinez",
+    "clave": "1234",
+    "idCliente": "RES-B-14-002"
   },
   {
-    "email": "seguridad.principal@segap.hn",
-    "primerNombre": "Fausto",
-    "segundoNombre": "Antonio",
-    "primerApellido": "Martínez",
-    "segundoApellido": "Sánchez",
-    "rol": "guardia",
-    "clave": "1234"
+    "usuario": "shernandez",
+    "clave": "1234",
+    "idCliente": "RES-C-8-003"
   },
   {
-    "email": "config.sistema@segap.hn",
-    "primerNombre": "Luis",
-    "segundoNombre": "Fernando",
-    "primerApellido": "Gómez",
-    "segundoApellido": "Diaz",
-    "rol": "parametrizador",
-    "clave": "1234"
+    "usuario": "ldiaz",
+    "clave": "1234",
+    "idCliente": "RES-A-5-004"
   }
 ]

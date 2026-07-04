@@ -24,7 +24,7 @@ export default function Login({ }: Props) {
     if (usuarioEncontrado) {
       // Guardamos en la variable de sesión global
       await login({
-        nombre: usuarioEncontrado.primerNombre,
+        nombre: usuarioEncontrado.nombre,
         rol: usuarioEncontrado.rol
       });
     } else {
