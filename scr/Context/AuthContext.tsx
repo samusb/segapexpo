@@ -1,10 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-interface Usuario {
-  nombre: string;
-  rol: string;
-}
+import { Usuario } from '../Context/tipos';
 
 interface AuthContextData {
   usuario: Usuario | null;

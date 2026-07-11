@@ -13,8 +13,11 @@ export default function Invitar() {
   useEffect(() => {
     // Al montar la pantalla, solo generamos el objeto de invitación para el QR
     // pero NO lo guardamos en el storage todavía.
-    if (usuario?.clienteInfo?.id) {
-      const nuevaInvitacion = crearInvitacion(usuario.clienteInfo.id);
+    // Se reescribe de forma más explícita para evitar advertencias del linter.
+    if (usuario && usuario.clienteInfo && usuario.clienteInfo.id) {
+      // En este punto, TypeScript sabe que `usuario.clienteInfo.id` existe y es seguro usarlo.
+      const idCliente = usuario.clienteInfo.id;
+      const nuevaInvitacion = crearInvitacion(idCliente);
       setInvitacion(nuevaInvitacion);
     }
   }, [usuario]); // Se ejecuta cuando el usuario esté disponible
