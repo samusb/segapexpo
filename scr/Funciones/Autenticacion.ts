@@ -1,15 +1,7 @@
+import { Usuario } from '../Context/tipos';
 import usuarios from '../Data/usuarios.json';
 import clientes from '../Data/clientes.json';
 import roles from '../Data/roles.json';
-
-export interface Usuario {
-  // Datos para la sesión
-  nombre: string;
-  rol: string; // 'ADM', 'GUA', 'RES', etc.
-  rolDescripcion: string;
-  // Datos completos del cliente
-  clienteInfo: any;
-}
 
 /**
  * Verifica si las credenciales de un usuario existen en el listado.
