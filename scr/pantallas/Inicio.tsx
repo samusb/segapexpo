@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useAuth } from '../Context/AuthContext';
+import { useAuth } from '../Modelo/AuthContext';
 
 // Definimos los tipos para la navegación
 type RootStackParamList = {

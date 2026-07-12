@@ -1,4 +1,4 @@
-import { Usuario } from '../Context/tipos';
+import { Usuario } from '../Modelo/tipos';
 import usuarios from '../Data/usuarios.json';
 import clientes from '../Data/clientes.json';
 import roles from '../Data/roles.json';
@@ -32,8 +32,8 @@ export const verificarUsuario = (usuarioLogin: string, clave: string): Usuario |
   // 4. Construir el objeto de usuario para la sesión
   return {
     nombre: cliente.primerNombre,
-    rol: cliente.rolId, // 'ADM', 'GUA', 'RES'
+    rol: cliente.rolId as 'ADM' | 'GUA' | 'RES', // 'ADM', 'GUA', 'RES'
     rolDescripcion: rol ? rol.descripcion : 'Desconocido',
-    clienteInfo: cliente,
+    clienteInfo: cliente as Usuario['clienteInfo'],
   };
 };

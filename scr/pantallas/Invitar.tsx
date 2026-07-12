@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { GenerarQR } from '../Componentes/GenerarQR';
 import { BotonWhatsapp } from '../Componentes/BotonWhatsapp';
 import { crearInvitacion } from '../Funciones/GenerarInvitacion';
-import { useAuth } from '../Context/AuthContext';
+import { useAuth } from '../Modelo/AuthContext';
 
 export default function Invitar() {
   const [invitacion, setInvitacion] = useState<any>(null);

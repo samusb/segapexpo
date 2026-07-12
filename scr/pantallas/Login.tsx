@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'reac
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../App';
 import { verificarUsuario } from '../Funciones/Autenticacion';
-import { useAuth } from '../Context/AuthContext';
+import { useAuth } from '../Modelo/AuthContext';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
 

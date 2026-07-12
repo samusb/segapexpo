@@ -6,7 +6,7 @@ import Inicio from './scr/pantallas/Inicio';
 import EscanearQR from './scr/pantallas/EscanearQR';
 import Invitar from './scr/pantallas/Invitar';
 import Login from './scr/pantallas/Login';
-import { AuthProvider, useAuth } from './scr/Context/AuthContext';
+import { AuthProvider, useAuth } from './scr/Modelo/AuthContext';
 
 // Definición de las rutas del Stack
 export type RootStackParamList = {
