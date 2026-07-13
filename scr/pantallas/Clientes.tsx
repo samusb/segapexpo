@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '../Modelo/AuthContext';
 import { listarClientes } from '../Servicios/ClientesDAO';
@@ -7,16 +7,31 @@ import { Cliente } from '../Modelo/Entidades'; // Usamos la definición centrali
 
 export default function Clientes() {
   const { usuario } = useAuth();
-  const [clientes, setClientes] = useState<Cliente[]>([]);
+  const [todosLosClientes, setTodosLosClientes] = useState<Cliente[]>([]);
+  const [clientesMostrados, setClientesMostrados] = useState<Cliente[]>([]);
+  const [terminoBusqueda, setTerminoBusqueda] = useState('');
 
   useEffect(() => {
     // Verificamos que el usuario y su IdEmpresa existan
     if (usuario && usuario.IdEmpresa) {
       // Llamamos a la función del DAO para obtener los clientes filtrados
       const clientesFiltrados = listarClientes(usuario.IdEmpresa);
-      setClientes(clientesFiltrados);
+      setTodosLosClientes(clientesFiltrados);
+      setClientesMostrados(clientesFiltrados);
     }
   }, [usuario]); // El efecto se ejecuta cuando el objeto de usuario cambia
+
+  // Efecto para filtrar los clientes según el término de búsqueda
+  useEffect(() => {
+    if (terminoBusqueda.trim() === '') {
+      setClientesMostrados(todosLosClientes);
+    } else {
+      const filtrados = todosLosClientes.filter(cliente =>
+        cliente.primerNombre.toLowerCase().includes(terminoBusqueda.toLowerCase())
+      );
+      setClientesMostrados(filtrados);
+    }
+  }, [terminoBusqueda, todosLosClientes]);
 
   // Componente para renderizar cada ítem de la lista
   const renderItem = ({ item }: { item: Cliente }) => (
@@ -30,8 +45,18 @@ export default function Clientes() {
 
   return (
     <SafeAreaView style={styles.container}>
+        <View style={styles.searchContainer}>
+          <Text style={styles.searchIcon}>🔍</Text>
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Buscar por primer nombre..."
+            placeholderTextColor="#666"
+            value={terminoBusqueda}
+            onChangeText={setTerminoBusqueda}
+          />
+        </View>
         <FlatList
-        data={clientes}
+        data={clientesMostrados}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         style={styles.lista}
@@ -63,6 +88,26 @@ const styles = StyleSheet.create({
   },
   listaContainer: {
     paddingHorizontal: '5%',
+  },
+  searchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#1a1a1a',
+    borderRadius: 10,
+    marginHorizontal: '5%',
+    marginVertical: 15,
+    paddingHorizontal: 15,
+    borderWidth: 1,
+    borderColor: '#333',
+  },
+  searchIcon: {
+    fontSize: 20,
+    marginRight: 10,
+  },
+  searchInput: {
+    flex: 1,
+    color: '#fff',
+    height: 50,
   },
   itemContainer: {
     backgroundColor: '#1a1a1a',
