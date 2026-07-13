@@ -12,10 +12,19 @@ let clientes: Cliente[] = [...clientesData] as Cliente[];
  * @returns Un array de objetos Cliente.
  */
 export const listarClientes = (idEmpresa?: string): Cliente[] => {
+  let clientesFiltrados = clientes;
   if (idEmpresa) {
-    return clientes.filter(c => c.IdEmpresa === idEmpresa);
+    clientesFiltrados = clientes.filter(c => c.IdEmpresa === idEmpresa);
   }
-  return clientes;
+
+  // Ordenar alfabéticamente por nombre completo de forma ascendente
+  clientesFiltrados.sort((a, b) => {
+    const nombreA = `${a.primerNombre} ${a.primerApellido}`.toLocaleLowerCase();
+    const nombreB = `${b.primerNombre} ${b.primerApellido}`.toLocaleLowerCase();
+    return nombreA.localeCompare(nombreB);
+  });
+
+  return clientesFiltrados;
 };
 
 /**
