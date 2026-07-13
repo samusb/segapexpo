@@ -22,8 +22,9 @@ export default function Clientes() {
   const renderItem = ({ item }: { item: Cliente }) => (
     <View style={styles.itemContainer}>
       <Text style={styles.itemNombre}>{`${item.primerNombre} ${item.primerApellido}`}</Text>
-      <Text style={styles.itemEmail}>{item.email}</Text>
-      <Text style={styles.itemRol}>Rol: {item.rolId}</Text>
+      <Text style={styles.itemLlamativo}>{item.estadoCuenta}</Text>
+      <Text style={styles.itemTerciario}>Rol: {item.rolId}</Text>
+      <Text style={styles.itemTerciario}>Telefono: {item.telefono}</Text>
     </View>
   );
 
@@ -35,9 +36,6 @@ export default function Clientes() {
         keyExtractor={(item) => item.id}
         style={styles.lista}
         contentContainerStyle={styles.listaContainer}
-        ListHeaderComponent={
-          <Text style={styles.titulo}>Clientes de la Empresa</Text>
-        }
         ListEmptyComponent={
           <Text style={styles.textoVacio}>No se encontraron clientes para esta empresa.</Text>
         }
@@ -75,8 +73,8 @@ const styles = StyleSheet.create({
     borderColor: '#333',
   },
   itemNombre: { color: '#fbef10', fontSize: 18, fontWeight: 'bold' },
-  itemEmail: { color: '#fff', fontSize: 14, marginTop: 5 },
-  itemRol: { color: '#aaa', fontSize: 12, marginTop: 5, fontStyle: 'italic' },
+  itemLlamativo: { color: '#fff', fontSize: 14, marginTop: 5 },
+  itemTerciario: { color: '#aaa', fontSize: 12, marginTop: 5, fontStyle: 'italic' },
   textoVacio: {
     color: '#aaa',
     fontSize: 16,
