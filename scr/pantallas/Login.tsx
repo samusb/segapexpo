@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../App';
-import { verificarUsuario } from '../Funciones/Autenticacion';
+import { verificarUsuario } from '../Servicios/Autenticacion';
 import { useAuth } from '../Modelo/AuthContext';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;

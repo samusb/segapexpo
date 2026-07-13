@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { GenerarQR } from '../Componentes/GenerarQR';
 import { BotonWhatsapp } from '../Componentes/BotonWhatsapp';
-import { crearInvitacion } from '../Funciones/GenerarInvitacion';
+import { crearInvitacion } from '../Servicios/GenerarInvitacion';
 import { useAuth } from '../Modelo/AuthContext';
 
 export default function Invitar() {

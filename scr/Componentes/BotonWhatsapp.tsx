@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Text, Alert, TouchableOpacity } from 'react-native';
 import * as Sharing from 'expo-sharing';
-import { guardarInvitacion } from '../Funciones/GenerarInvitacion';
+import { guardarInvitacion } from '../Servicios/GenerarInvitacion';
 
 /**
  * Componente para compartir el código QR generado a través de WhatsApp, Necesita el ref del ViewShot para capturar la imagen del QR

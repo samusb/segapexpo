@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
 import { CameraView, useCameraPermissions } from 'expo-camera';
-import { validarYUsarInvitacion } from '../Funciones/GenerarInvitacion';
+import { validarYUsarInvitacion } from '../Servicios/GenerarInvitacion';
 
 export default function EscanearQR() {
   const [permission, requestPermission] = useCameraPermissions();
