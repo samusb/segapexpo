@@ -1,4 +1,4 @@
-import { Usuario } from '../Modelo/tipos';
+import { Usuario, Cliente } from '../Modelo/Entidades';
 import usuarios from '../Data/usuarios.json';
 import clientes from '../Data/clientes.json';
 import roles from '../Data/roles.json';
@@ -33,6 +33,7 @@ export const verificarUsuario = (usuarioLogin: string, clave: string): Usuario |
   return {
     nombre: cliente.primerNombre,
     rol: cliente.rolId as 'ADM' | 'GUA' | 'RES', // 'ADM', 'GUA', 'RES'
+    IdEmpresa: cliente.IdEmpresa,
     rolDescripcion: rol ? rol.descripcion : 'Desconocido',
     clienteInfo: cliente as Usuario['clienteInfo'],
   };

@@ -6,6 +6,7 @@ import Inicio from './scr/pantallas/Inicio';
 import EscanearQR from './scr/pantallas/EscanearQR';
 import Invitar from './scr/pantallas/Invitar';
 import Login from './scr/pantallas/Login';
+import Clientes from './scr/pantallas/Clientes'; // 1. Importar la nueva pantalla
 import { AuthProvider, useAuth } from './scr/Modelo/AuthContext';
 
 // Definición de las rutas del Stack
@@ -14,6 +15,7 @@ export type RootStackParamList = {
   EscanearQR: undefined;
   Invitar: undefined;
   Login: undefined;
+  Clientes: undefined; // 2. Añadir la ruta a la lista de tipos
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -67,6 +69,7 @@ function Navigation() {
             <Stack.Screen name="Home" component={withGlobalScroll(Inicio)} options={{ title: 'Inicio' }} />
             <Stack.Screen name="EscanearQR" component={withGlobalScroll(EscanearQR)} options={{ title: 'Escanear' }} />
             <Stack.Screen name="Invitar" component={withGlobalScroll(Invitar)} options={{ title: 'Invitar Usuario' }} />
+            <Stack.Screen name="Clientes" component={Clientes} options={{ title: 'Clientes' }} />
           </>
         )}
       </Stack.Navigator>

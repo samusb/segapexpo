@@ -10,6 +10,7 @@ type RootStackParamList = {
   EscanearQR: undefined;
   Invitar: undefined;
   Login: undefined;
+  Clientes: undefined; // Añadimos la nueva pantalla
 };
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
@@ -41,6 +42,16 @@ export default function Inicio({ navigation }: Props) {
           onPress={() => navigation.navigate('Invitar')}
         >
           <Text style={styles.botonTexto}>Invitar Usuario</Text>
+        </TouchableOpacity>
+      )}
+
+      {/* Botón visible solo para Administrador (ADM) */}
+      {(usuario.rol === 'ADM') && (
+        <TouchableOpacity 
+          style={[styles.boton, { marginTop: 20 }]} 
+          onPress={() => navigation.navigate('Clientes')}
+        >
+          <Text style={styles.botonTexto}>Ver Clientes</Text>
         </TouchableOpacity>
       )}
 

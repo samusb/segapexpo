@@ -1,17 +1,9 @@
 /**
- * #########
- * OBJETIVO:
- * #########
- *    Representar las entidades de la aplicación, como `Cliente`, `SesionUsuario` y `Usuarios`.
- *    Estas interfaces se utilizan para tipar los datos que se manejan en la aplicación,
- *    asegurando consistencia y seguridad de tipos en TypeScript.
+ * Define los tipos de datos centrales para la aplicación.
  */
 
-/**
- * Representa la estructura de un cliente en `clientes.json`.
- */
 export interface Cliente {
-  id: string;
+   id: string;
   primerNombre: string;
   segundoNombre: string;
   primerApellido: string;
@@ -21,22 +13,21 @@ export interface Cliente {
   estadoCuenta: 'solvente' | 'mora';
   fechaUltimoPago: string;
   rolId: 'ADM' | 'GUA' | 'RES';
+  IdEmpresa: string;
 }
 
-/**
- * Representa la estructura de un usuario en sesión.
- */
-export interface SesionUsuario {
+export interface Usuario {
   nombre: string;
   rol: 'ADM' | 'GUA' | 'RES' | 'VIS';
   rolDescripcion: string;
   clienteInfo: Cliente;
+  IdEmpresa: string;
 }
 
 /**
  * Representa la estructura de las credenciales de un usuario en `usuarios.json`.
  */
-export interface Usuarios {
+export interface CredencialUsuario {
   usuario: string;
   clave: string;
   idCliente: string;
