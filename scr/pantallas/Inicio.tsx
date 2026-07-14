@@ -80,15 +80,15 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
   boton: {
+    width: '90%', // Ocupa el 90% del ancho de la pantalla
     backgroundColor: '#fbef10ba',
-    borderColor: '#fbef10',
-    borderWidth: 2,
-    paddingVertical: 15,
-    paddingHorizontal: 30,
-    borderRadius: 10,
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center', // Centra el texto horizontalmente
   },
   botonTexto: {
     fontWeight: 'bold',
     color: '#000',
+    fontSize: 16,
   }
 });
