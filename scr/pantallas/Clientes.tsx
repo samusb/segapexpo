@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, TextInput } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TextInput, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '../Modelo/AuthContext';
 import { listarClientes } from '../Servicios/ClientesDAO';
 import { Cliente } from '../Modelo/Entidades'; // Usamos la definición centralizada
+import { useNavigation, useIsFocused } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../App';
 
 export default function Clientes() {
   const { usuario } = useAuth();
   const [todosLosClientes, setTodosLosClientes] = useState<Cliente[]>([]);
   const [clientesMostrados, setClientesMostrados] = useState<Cliente[]>([]);
   const [terminoBusqueda, setTerminoBusqueda] = useState('');
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     // Verificamos que el usuario y su IdEmpresa existan
@@ -19,7 +24,7 @@ export default function Clientes() {
       setTodosLosClientes(clientesFiltrados);
       setClientesMostrados(clientesFiltrados);
     }
-  }, [usuario]); // El efecto se ejecuta cuando el objeto de usuario cambia
+  }, [usuario, isFocused]); // El efecto se ejecuta cuando el objeto de usuario cambia
 
   // Efecto para filtrar los clientes según el término de búsqueda
   useEffect(() => {
@@ -45,6 +50,12 @@ export default function Clientes() {
 
   return (
     <SafeAreaView style={styles.container}>
+        <TouchableOpacity 
+          style={styles.botonAgregar}
+          onPress={() => navigation.navigate('ClienteFormulario')}
+        >
+          <Text style={styles.botonAgregarTexto}>+ Agregar Cliente</Text>
+        </TouchableOpacity>
         <View style={styles.searchContainer}>
           <Text style={styles.searchIcon}>🔍</Text>
           <TextInput
@@ -93,7 +104,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#1a1a1a',
-    borderRadius: 10,
+    borderRadius: 8,
     marginHorizontal: '5%',
     marginVertical: 15,
     paddingHorizontal: 15,
@@ -125,5 +136,18 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center',
     marginTop: 60,
+  },
+  botonAgregar: {
+    backgroundColor: '#fbef10ba',
+    marginHorizontal: '5%',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  botonAgregarTexto: {
+    color: '#070707',
+    fontWeight: 'bold',
+    fontSize: 16,
   },
 });
