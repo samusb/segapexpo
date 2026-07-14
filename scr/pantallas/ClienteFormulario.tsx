@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { useAuth } from '../Modelo/AuthContext';
-import { agregarCliente } from '../Servicios/ClientesDAO';
+import { agregarCliente, editarCliente } from '../Servicios/ClientesDAO';
 import { Cliente } from '../Modelo/Entidades';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../App';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'ClienteFormulario'>;
 
-export default function ClienteFormulario({ navigation }: Props) {
+export default function ClienteFormulario({ navigation, route }: Props) {
+  // Extraemos el cliente de los parámetros de la ruta, si existe.
+  const clienteExistente = route.params?.cliente;
+
   const { usuario } = useAuth();
   const [formState, setFormState] = useState({
     primerNombre: '',
@@ -19,6 +22,19 @@ export default function ClienteFormulario({ navigation }: Props) {
     telefono: '',
   });
 
+  // Si estamos editando, llenamos el formulario con los datos del cliente.
+  useEffect(() => {
+    if (clienteExistente) {
+      setFormState({
+        primerNombre: clienteExistente.primerNombre,
+        segundoNombre: clienteExistente.segundoNombre || '',
+        primerApellido: clienteExistente.primerApellido,
+        segundoApellido: clienteExistente.segundoApellido || '',
+        email: clienteExistente.email,
+        telefono: clienteExistente.telefono || '',
+      });
+    }
+  }, [clienteExistente]);
   const handleChange = (name: keyof typeof formState, value: string) => {
     setFormState(prevState => ({ ...prevState, [name]: value }));
   };
@@ -29,25 +45,39 @@ export default function ClienteFormulario({ navigation }: Props) {
       return;
     }
 
-    const nuevoCliente: Cliente = {
-      // En una app real, el ID debería ser único y generado de forma segura.
-      id: `RES-NEW-${Date.now()}`, 
-      ...formState,
-      estadoCuenta: 'solvente', // Valor por defecto
-      fechaUltimoPago: new Date().toISOString().split('T')[0], // Fecha actual
-      rolId: 'RES', // Rol por defecto para nuevos clientes
-      IdEmpresa: usuario?.IdEmpresa || '',
-    };
+    if (clienteExistente) {
+      // Lógica para editar
+      const clienteActualizado: Cliente = {
+        ...clienteExistente,
+        ...formState,
+      };
+      editarCliente(clienteActualizado);
+      Alert.alert('Éxito', 'Cliente actualizado correctamente.', [
+        { text: 'OK', onPress: () => navigation.goBack() }
+      ]);
+    } else {
+      // Lógica para agregar un nuevo cliente
+      const nuevoCliente: Cliente = {
+        // En una app real, el ID debería ser único y generado de forma segura.
+        id: `RES-NEW-${Date.now()}`, 
+        ...formState,
+        estadoCuenta: 'solvente', // Valor por defecto
+        fechaUltimoPago: new Date().toISOString().split('T')[0], // Fecha actual
+        rolId: 'RES', // Rol por defecto para nuevos clientes
+        IdEmpresa: usuario?.IdEmpresa || '',
+      };
 
-    agregarCliente(nuevoCliente);
-    Alert.alert('Éxito', 'Cliente agregado correctamente.', [
-      { text: 'OK', onPress: () => navigation.goBack() }
-    ]);
+      agregarCliente(nuevoCliente);
+      Alert.alert('Éxito', 'Cliente agregado correctamente.', [
+        { text: 'OK', onPress: () => navigation.goBack() }
+      ]);
+    }
   };
 
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.title}>Nuevo Cliente</Text>
+      {/* El título cambia si estamos editando o creando */}
+      <Text style={styles.title}>{clienteExistente ? 'Editar Cliente' : 'Nuevo Cliente'}</Text>
       
       <TextInput
         style={styles.input}
@@ -96,7 +126,7 @@ export default function ClienteFormulario({ navigation }: Props) {
       />
 
       <TouchableOpacity style={styles.boton} onPress={handleGuardarCliente}>
-        <Text style={styles.botonTexto}>Guardar Cliente</Text>
+        <Text style={styles.botonTexto}>{clienteExistente ? 'Actualizar Cliente' : 'Guardar Cliente'}</Text>
       </TouchableOpacity>
     </ScrollView>
   );

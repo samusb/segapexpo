@@ -8,6 +8,7 @@ import Invitar from './scr/pantallas/Invitar';
 import Login from './scr/pantallas/Login';
 import Clientes from './scr/pantallas/Clientes';
 import ClienteFormulario from './scr/pantallas/ClienteFormulario'; // 1. Importar la nueva pantalla
+import { Cliente } from './scr/Modelo/Entidades';
 import { AuthProvider, useAuth } from './scr/Modelo/AuthContext';
 
 // Definición de las rutas del Stack
@@ -16,8 +17,8 @@ export type RootStackParamList = {
   EscanearQR: undefined;
   Invitar: undefined;
   Login: undefined;
-  Clientes: undefined; 
-  ClienteFormulario: undefined; // 2. Añadir la ruta a la lista de tipos
+  Clientes: undefined;
+  ClienteFormulario: { cliente?: Cliente }; // 2. Añadir la ruta a la lista de tipos
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();

@@ -40,12 +40,17 @@ export default function Clientes() {
 
   // Componente para renderizar cada ítem de la lista
   const renderItem = ({ item }: { item: Cliente }) => (
-    <View style={styles.itemContainer}>
-      <Text style={styles.itemNombre}>{`${item.primerNombre} ${item.primerApellido}`}</Text>
-      <Text style={styles.itemLlamativo}>{item.estadoCuenta}</Text>
-      <Text style={styles.itemTerciario}>Rol: {item.rolId}</Text>
-      <Text style={styles.itemTerciario}>Telefono: {item.telefono}</Text>
-    </View>
+    <TouchableOpacity
+      style={styles.itemContainer}
+      onPress={() => navigation.navigate('ClienteFormulario', { cliente: item })}
+    >
+      <View>
+        <Text style={styles.itemNombre}>{`${item.primerNombre} ${item.primerApellido}`}</Text>
+        <Text style={styles.itemLlamativo}>{item.estadoCuenta}</Text>
+        <Text style={styles.itemTerciario}>Rol: {item.rolId}</Text>
+        <Text style={styles.itemTerciario}>Telefono: {item.telefono}</Text>
+      </View>
+    </TouchableOpacity>
   );
 
   return (
