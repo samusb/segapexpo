@@ -57,7 +57,7 @@ export default function Clientes() {
     <SafeAreaView style={styles.container}>
         <TouchableOpacity 
           style={styles.botonAgregar}
-          onPress={() => navigation.navigate('ClienteFormulario')}
+          onPress={() => navigation.navigate('ClienteFormulario', {})}
         >
           <Text style={styles.botonAgregarTexto}>+ Agregar Cliente</Text>
         </TouchableOpacity>

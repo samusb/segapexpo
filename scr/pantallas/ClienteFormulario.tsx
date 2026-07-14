@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { useAuth } from '../Modelo/AuthContext';
-import { agregarCliente, editarCliente } from '../Servicios/ClientesDAO';
+import { agregarCliente, editarCliente, borrarCliente } from '../Servicios/ClientesDAO';
 import { Cliente } from '../Modelo/Entidades';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../App';
@@ -74,6 +74,28 @@ export default function ClienteFormulario({ navigation, route }: Props) {
     }
   };
 
+  const handleBorrarCliente = () => {
+    if (!clienteExistente) return;
+
+    Alert.alert(
+      "Confirmar Borrado",
+      `¿Estás seguro de que deseas borrar a ${clienteExistente.primerNombre} ${clienteExistente.primerApellido}? Esta acción no se puede deshacer.`,
+      [
+        {
+          text: "Cancelar",
+          style: "cancel"
+        },
+        { 
+          text: "Borrar", 
+          onPress: () => {
+            borrarCliente(clienteExistente.id);
+            Alert.alert('Éxito', 'Cliente borrado correctamente.', [{ text: 'OK', onPress: () => navigation.goBack() }]);
+          },
+          style: 'destructive' // Estilo para iOS que resalta la acción destructiva
+        }
+      ]
+    );
+  };
   return (
     <ScrollView style={styles.container}>
       {/* El título cambia si estamos editando o creando */}
@@ -128,6 +150,12 @@ export default function ClienteFormulario({ navigation, route }: Props) {
       <TouchableOpacity style={styles.boton} onPress={handleGuardarCliente}>
         <Text style={styles.botonTexto}>{clienteExistente ? 'Actualizar Cliente' : 'Guardar Cliente'}</Text>
       </TouchableOpacity>
+
+      {clienteExistente && (
+        <TouchableOpacity style={styles.botonBorrar} onPress={handleBorrarCliente}>
+          <Text style={styles.botonBorrarTexto}>Borrar Cliente</Text>
+        </TouchableOpacity>
+      )}
     </ScrollView>
   );
 }
@@ -163,6 +191,20 @@ const styles = StyleSheet.create({
   },
   botonTexto: {
     color: '#070707',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  botonBorrar: {
+    backgroundColor: 'transparent',
+    padding: 15,
+    borderRadius: 10,
+    alignItems: 'center',
+    marginTop: 15,
+    borderWidth: 2,
+    borderColor: '#c1121f',
+  },
+  botonBorrarTexto: {
+    color: '#c1121f',
     fontWeight: 'bold',
     fontSize: 16,
   },
