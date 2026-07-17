@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../App';
-import { verificarUsuario } from '../Servicios/Autenticacion';
+import { verificarUsuario } from '../DAO/UsuarioDAO'; // Corregido: Apunta a la nueva carpeta DAO
 import { useAuth } from '../Modelo/AuthContext';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
