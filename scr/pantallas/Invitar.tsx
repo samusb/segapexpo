@@ -2,12 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { GenerarQR } from '../Componentes/GenerarQR';
 import { BotonWhatsapp } from '../Componentes/BotonWhatsapp';
-import { crearInvitacion } from '../Servicios/GenerarInvitacion';
+import { crearInvitacion, Invitacion } from '../Servicios/InvitacionesDAO';
 import { useAuth } from '../Modelo/AuthContext';
 
 export default function Invitar() {
-  const [invitacion, setInvitacion] = useState<any>(null);
   const qrRef = useRef<any>(null);
+  const [invitacion, setInvitacion] = useState<Invitacion | null>(null);
   const { usuario } = useAuth();
 
   useEffect(() => {

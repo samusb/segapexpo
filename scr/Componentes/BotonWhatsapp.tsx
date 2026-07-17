@@ -1,16 +1,17 @@
 import React from 'react';
 import { View, StyleSheet, Text, Alert, TouchableOpacity } from 'react-native';
 import * as Sharing from 'expo-sharing';
-import { guardarInvitacion } from '../Servicios/GenerarInvitacion';
+import { guardarInvitacion, Invitacion } from '../Servicios/InvitacionesDAO';
+
 
 /**
  * Componente para compartir el código QR generado a través de WhatsApp, Necesita el ref del ViewShot para capturar la imagen del QR
  * @param {Object} props - Las props para el componente
  * @param {React.RefObject<any>} props.viewShotRef - El ref del ViewShot que contiene el QR
- * @param {any} props.invitacion - El objeto de la invitación para guardar antes de compartir
+ * @param {Invitacion} props.invitacion - El objeto de la invitación para guardar antes de compartir
  * @returns {JSX.Element} Componente que muestra el botón para compartir en WhatsApp
  */
-export const BotonWhatsapp = ({ viewShotRef, invitacion }: { viewShotRef: React.RefObject<any>, invitacion: any }) => {
+export const BotonWhatsapp = ({ viewShotRef, invitacion }: { viewShotRef: React.RefObject<any>, invitacion: Invitacion }) => {
 
   const compartirPorWhatsApp = async () => {
     try {
