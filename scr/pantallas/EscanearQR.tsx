@@ -3,11 +3,12 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import { validarYUsarInvitacion } from '../DAO/InvitacionesDAO';
+import { Cliente, DatosAcceso, Invitacion } from '../Modelo/Entidades';
 
 export default function EscanearQR() {
   const [permission, requestPermission] = useCameraPermissions();
   const [scannedData, setScannedData] = useState<string | null>(null);
-  const [resultadoValidacion, setResultadoValidacion] = useState<any>(null);
+  const [resultadoValidacion, setResultadoValidacion] = useState<{ success: boolean; mensaje: string; data?: DatosAcceso | Invitacion | Cliente } | null>(null);
 
   if (!permission) {
     // Camera permissions are still loading
@@ -30,15 +31,27 @@ export default function EscanearQR() {
     setScannedData(data);
 
     try {
-      const parsed = JSON.parse(data);
+      const parsed: Invitacion | Cliente = JSON.parse(data);
+
+      // Caso 1: Es una invitación de un solo uso
       if (parsed.idUnico) {
         const res = await validarYUsarInvitacion(parsed.idUnico);
         setResultadoValidacion(res);
+      
+      // Caso 2: Es un QR de identificación de un cliente
+      } else if (parsed.id && parsed.rolId) {
+        const cliente = parsed as Cliente;
+        setResultadoValidacion({
+          success: true,
+          mensaje: 'Identificación de Residente',
+          data: cliente,
+        });
+
       } else {
         setResultadoValidacion({ success: false, mensaje: 'QR no reconocido por SEGAP' });
       }
     } catch (e) {
-      setResultadoValidacion({ success: false, mensaje: 'Formato de código inválido' });
+      setResultadoValidacion({ success: false, mensaje: 'Formato de código QR inválido' });
     }
   };
 
@@ -47,23 +60,38 @@ export default function EscanearQR() {
     if (!resultadoValidacion) return <Text style={styles.resultadoTexto}>Validando con el servidor...</Text>;
 
     const { success, mensaje, data } = resultadoValidacion;
-    
+
+    // Si es un cliente, mostramos su información de perfil
+    if (data && 'primerNombre' in data) {
+      const cliente = data as Cliente;
       return (
         <View style={styles.detalleContainer}>
-          <Text style={styles.resultadoTitulo}>Permiso:</Text>
-          <Text style={[styles.accesoStatus, { color: success ? '#FFF' : '#FFF' }]}>
-            {success ? 'CONCEDIDO' : 'DENEGADO'}
-          </Text>
-          <Text style={styles.resultadoMensaje}>{mensaje}</Text>
-
-          {data && Object.entries(data).map(([key, value]) => (
-            <Text key={key} style={styles.resultadoTexto}>
-              <Text style={styles.label}>{key}: </Text>
-              {String(value)}
-            </Text>
-          ))}
+          <Text style={styles.resultadoTitulo}>{mensaje}</Text>
+          <Text style={styles.resultadoTexto}><Text style={styles.label}>Nombre: </Text>{`${cliente.primerNombre} ${cliente.primerApellido}`}</Text>
+          <Text style={styles.resultadoTexto}><Text style={styles.label}>Email: </Text>{cliente.email}</Text>
+          <Text style={styles.resultadoTexto}><Text style={styles.label}>Estado: </Text>{cliente.estadoCuenta}</Text>
+          <Text style={styles.resultadoTexto}><Text style={styles.label}>Rol: </Text>{cliente.rolId}</Text>
         </View>
       );
+    }
+
+    // Si es una invitación, mostramos el resultado del acceso
+    return (
+      <View style={styles.detalleContainer}>
+        <Text style={styles.resultadoTitulo}>Resultado del Acceso:</Text>
+        <Text style={[styles.accesoStatus, { color: success ? '#28a745' : '#dc3545' }]}>
+          {success ? 'ACCESO PERMITIDO' : 'ACCESO DENEGADO'}
+        </Text>
+        <Text style={styles.resultadoMensaje}>{mensaje}</Text>
+
+        {data && Object.entries(data).map(([key, value]) => (
+          <Text key={key} style={styles.resultadoTexto}>
+            <Text style={styles.label}>{key}: </Text>
+            {String(value)}
+          </Text>
+        ))}
+      </View>
+    );
   };
 
   return (
