@@ -31,22 +31,25 @@ export default function EscanearQR() {
     setScannedData(data);
 
     try {
-      const parsed: Invitacion | Cliente = JSON.parse(data);
+      // JSON.parse devuelve 'any', por lo que debemos verificar su estructura.
+      const parsed = JSON.parse(data);
 
-      // Caso 1: Es una invitación de un solo uso
-      if (parsed.idUnico) {
-        const res = await validarYUsarInvitacion(parsed.idUnico);
+      // Usamos el operador 'in' como un "type guard" para que TypeScript
+      // pueda inferir el tipo correcto del objeto 'parsed'.
+
+      // Caso 1: Si tiene 'idUnico', es una Invitacion.
+      if (typeof parsed === 'object' && parsed !== null && 'idUnico' in parsed) {
+        const res = await validarYUsarInvitacion((parsed as Invitacion).idUnico);
         setResultadoValidacion(res);
       
-      // Caso 2: Es un QR de identificación de un cliente
-      } else if (parsed.id && parsed.rolId) {
+      // Caso 2: Si tiene 'id' y 'rolId', es un Cliente.
+      } else if (typeof parsed === 'object' && parsed !== null && 'id' in parsed && 'rolId' in parsed) {
         const cliente = parsed as Cliente;
         setResultadoValidacion({
           success: true,
           mensaje: 'Identificación de Residente',
           data: cliente,
         });
-
       } else {
         setResultadoValidacion({ success: false, mensaje: 'QR no reconocido por SEGAP' });
       }
