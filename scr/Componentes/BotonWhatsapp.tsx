@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Text, Alert, TouchableOpacity } from 'react-native';
 import * as Sharing from 'expo-sharing';
-import { guardarInvitacion } from '../Servicios/InvitacionesDAO';
+import { guardarInvitacion } from '../DAO/InvitacionesDAO';
 import { Invitacion } from '../Modelo/Entidades';
 
 

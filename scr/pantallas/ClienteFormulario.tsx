@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { useAuth } from '../Modelo/AuthContext';
-import { agregarCliente, editarCliente, borrarCliente } from '../Servicios/ClientesDAO';
+import { agregarCliente, editarCliente, borrarCliente } from '../DAO/ClientesDAO';
 import { Cliente } from '../Modelo/Entidades';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../App';

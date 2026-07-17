@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, TextInput, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '../Modelo/AuthContext';
-import { listarClientes } from '../Servicios/ClientesDAO';
+import { listarClientes } from '../DAO/ClientesDAO';
 import { Cliente } from '../Modelo/Entidades'; // Usamos la definición centralizada
 import { useNavigation, useIsFocused } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
