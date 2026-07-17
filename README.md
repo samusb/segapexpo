@@ -66,22 +66,36 @@ scr/
 
 ---
 
-## ⚙️ Instalación y Ejecución
+## ⚙️ Prerrequisitos
+
+Antes de comenzar, asegúrate de tener instalado el siguiente software en tu entorno de desarrollo:
+
+- **Node.js**: Se recomienda la versión LTS (Long Term Support). Node.js incluye `npm` (Node Package Manager), que se usará para gestionar las dependencias del proyecto. Puedes descargarlo desde nodejs.org.
+- **Git**: Para clonar el repositorio. Puedes descargarlo desde git-scm.com.
+- **App Expo Go**: Instala la aplicación Expo Go en tu dispositivo físico (iOS o Android). Es la forma más rápida de ejecutar y probar la aplicación sin necesidad de configurar emuladores nativos.
+
+---
+
+## 🚀 Instalación y Ejecución
 
 1.  **Clonar el repositorio:**
+    Usa Git para descargar una copia local del proyecto.
     ```bash
     git clone <url-del-repositorio>
     cd segapexpo
     ```
 
 2.  **Instalar dependencias:**
+    Este comando leerá el archivo `package.json` e instalará todas las librerías y paquetes necesarios para que el proyecto funcione, como React Native, Expo, React Navigation, etc.
     ```bash
     npm install
     ```
 
 3.  **Iniciar el servidor de desarrollo de Expo:**
+    Este comando compila la aplicación y levanta un servidor de desarrollo local (Metro Bundler).
     ```bash
     npx expo start
     ```
 
-Esto abrirá el Metro Bundler. Puedes escanear el código QR con la aplicación Expo Go en tu dispositivo móvil (iOS o Android) para ejecutar la aplicación.
+4.  **Ejecutar la aplicación:**
+    Una vez que el servidor se inicie, mostrará un código QR en la terminal. Abre la aplicación **Expo Go** en tu teléfono y escanea el QR para cargar y ejecutar la aplicación.
