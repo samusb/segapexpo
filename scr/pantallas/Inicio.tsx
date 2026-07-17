@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useAuth } from '../Modelo/AuthContext';
+import { GenerarQR } from '../Componentes/GenerarQR';
 
 // Definimos los tipos para la navegación
 type RootStackParamList = {
@@ -17,11 +18,19 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
 export default function Inicio({ navigation }: Props) {
   const { usuario } = useAuth();
+  const qrRef = useRef<any>(null); // Ref para el componente QR
 
   if (!usuario) return null;
 
+  // Preparamos los datos del cliente para el QR.
+  // En este caso, es la información completa del cliente.
+  const textoDelQR = JSON.stringify(usuario.clienteInfo);
+
   return (
     <View style={styles.container}>
+      {/* Reutilizamos el componente GenerarQR para mostrar la info del cliente */}
+      <GenerarQR textoDelQR={textoDelQR} qrRef={qrRef} />
+
       <Text style={styles.titulo}>¡Hola, {usuario.nombre}!</Text>
       <Text style={styles.subtitulo}>Favor selecciona la funcion que deseas ejecutar:</Text>
 
@@ -70,6 +79,7 @@ const styles = StyleSheet.create({
   titulo: {
     color: '#fff',
     fontSize: 32,
+    marginTop: 20,
     fontWeight: 'bold',
   },
   subtitulo: {
