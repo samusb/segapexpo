@@ -1,21 +1,26 @@
 [
   {
-    "usuario": "ugomez",
+    "usuario": "admin",
     "clave": "1234",
     "idCliente": "RES-A-20-001"
   },
   {
-    "usuario": "cmartinez",
+    "usuario": "guardia",
     "clave": "1234",
     "idCliente": "RES-B-14-002"
   },
   {
-    "usuario": "shernandez",
+    "usuario": "inexistente",
+    "clave": "1234",
+    "idCliente": "RES-C-8-333"
+  },
+  {
+    "usuario": "moroso",
     "clave": "1234",
     "idCliente": "RES-C-8-003"
   },
   {
-    "usuario": "ldiaz",
+    "usuario": "pagador",
     "clave": "1234",
     "idCliente": "RES-A-5-004"
   }
