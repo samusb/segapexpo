@@ -28,6 +28,15 @@ export const listarClientes = (idEmpresa?: string): Cliente[] => {
 };
 
 /**
+ * Busca un cliente por su ID.
+ * @param idCliente - El ID del cliente a buscar.
+ * @returns El objeto Cliente si se encuentra, o undefined si no.
+ */
+export const buscarClientePorId = (idCliente: string): Cliente | undefined => {
+  return clientes.find(c => c.id === idCliente);
+};
+
+/**
  * Agrega un nuevo cliente a la lista en memoria.
  * @param nuevoCliente - El objeto del cliente a agregar.
  * @returns El cliente que fue agregado.

@@ -3,6 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import { validarYUsarInvitacion } from '../DAO/InvitacionesDAO';
+import { buscarClientePorId } from '../DAO/ClientesDAO';
 import { Cliente, DatosAcceso, Invitacion } from '../Modelo/Entidades';
 
 export default function EscanearQR() {
@@ -44,12 +45,22 @@ export default function EscanearQR() {
       
       // Caso 2: Si tiene 'id' y 'rolId', es un Cliente.
       } else if (typeof parsed === 'object' && parsed !== null && 'id' in parsed && 'rolId' in parsed) {
-        const cliente = parsed as Cliente;
-        setResultadoValidacion({
-          success: true,
-          mensaje: 'Identificación de Residente',
-          data: cliente,
-        });
+        // Extraemos el ID del cliente del QR
+        const idClienteScaneado = (parsed as Cliente).id;
+        // Validamos que el cliente exista en nuestro sistema usando el DAO
+        const clienteEncontrado = buscarClientePorId(idClienteScaneado);
+
+        if (clienteEncontrado) {
+          // Si el cliente existe, mostramos sus datos.
+          setResultadoValidacion({
+            success: true,
+            mensaje: 'Identificación de Residente Válida',
+            data: clienteEncontrado,
+          });
+        } else {
+          // Si no existe, mostramos un error.
+          setResultadoValidacion({ success: false, mensaje: 'Cliente no registrado en el sistema.' });
+        }
       } else {
         setResultadoValidacion({ success: false, mensaje: 'QR no reconocido por SEGAP' });
       }
