@@ -2,38 +2,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import invitacionesData from '../Data/invitaciones.json';
 import clientesData from '../Data/clientes.json';
 import residenciasData from '../Data/residencias.json';
-import { Cliente } from '../Modelo/Entidades';
-
-// Definimos los tipos para los datos que manejamos en este módulo.
-
-type TipoInvitacion = 'residente' | 'visitante';
-type EstadoInvitacion = 'activo' | 'inactivo' | 'vencido';
-
-/**
- * Representa la estructura de una invitación.
- */
-export interface Invitacion {
-  idUnico: string;
-  estado: EstadoInvitacion;
-}
-
-/**
- * Representa la estructura de una residencia en residencias.json.
- */
-interface Residencia {
-  cliente: string; // Corresponde al id del Cliente
-  casa: string;
-  bloque: string;
-}
-
-/**
- * Representa los datos de acceso que se muestran al validar un QR.
- */
-export interface DatosAcceso {
-  "Invitado por": string;
-  "Residencia": string;
-  "Estado de Residente": 'solvente' | 'mora';
-}
+import {
+  Cliente,
+  Invitacion,
+  Residencia,
+  DatosAcceso,
+  TipoInvitacion,
+  EstadoInvitacion,
+} from '../Modelo/Entidades';
 
 // Hacemos copias en memoria para poder trabajar con los datos.
 const clientes: Cliente[] = clientesData as Cliente[];
